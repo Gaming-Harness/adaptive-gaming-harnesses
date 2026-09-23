@@ -496,6 +496,50 @@
       TTHE rescues 7, 22, and 10 more tasks than Auto-K on the three seeds. On seeds 202 and 303 together, TTHE alone solves 36 tasks that Auto-K misses, against 4 in the other direction.
     </p>
 
+    <h3 class="block-title">Frozen transfer</h3>
+    <p class="has-text-centered" style="color: #555;">
+      Knowledge learned on earlier tasks is frozen and applied to 60 unseen tasks. Every component stays fixed during evaluation, so the result measures whether that knowledge generalizes without further search.
+    </p>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Overall</th>
+            <th>Mine</th>
+            <th>Kill</th>
+            <th>Craft</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bare</td>
+            <td>8 / 60</td>
+            <td>7 / 20</td>
+            <td>1 / 20</td>
+            <td>0 / 20</td>
+          </tr>
+          <tr>
+            <td>Auto-K</td>
+            <td>7 / 60</td>
+            <td>6 / 20</td>
+            <td>1 / 20</td>
+            <td>0 / 20</td>
+          </tr>
+          <tr class="ours">
+            <td>TTHE</td>
+            <td>15 / 60</td>
+            <td>9 / 20</td>
+            <td>5 / 20</td>
+            <td>1 / 20</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="is-size-7 caption">
+      Frozen transfer to 60 unseen tasks. All components are fixed during evaluation. TTHE solves 15 / 60, against 8 / 60 for Bare and 7 / 60 for a frozen Auto-K bank. The gain shows up in mining, combat, and crafting.
+    </p>
+
     <h3 class="block-title">Where the extra successes come from</h3>
     <div class="table-container">
       <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
@@ -731,48 +775,6 @@
     </div>
 
     <h3 class="title is-4 has-text-centered" style="margin-top: 42px;">Frozen transfer</h3>
-    <p class="has-text-centered" style="color: #555; max-width: 760px; margin: 0 auto 16px;">
-      Knowledge learned on earlier tasks is frozen and applied to 60 unseen tasks. Every component stays fixed during evaluation, so the result measures whether that knowledge generalizes without further search.
-    </p>
-    <div class="table-container">
-      <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
-        <thead>
-          <tr>
-            <th>Method</th>
-            <th>Overall</th>
-            <th>Mine</th>
-            <th>Kill</th>
-            <th>Craft</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Bare</td>
-            <td>8 / 60</td>
-            <td>7 / 20</td>
-            <td>1 / 20</td>
-            <td>0 / 20</td>
-          </tr>
-          <tr>
-            <td>Auto-K</td>
-            <td>7 / 60</td>
-            <td>6 / 20</td>
-            <td>1 / 20</td>
-            <td>0 / 20</td>
-          </tr>
-          <tr class="ours">
-            <td>TTHE</td>
-            <td>15 / 60</td>
-            <td>9 / 20</td>
-            <td>5 / 20</td>
-            <td>1 / 20</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="is-size-7 caption" style="margin-bottom: 22px;">
-      Frozen transfer to 60 unseen tasks. All components are fixed during evaluation. TTHE solves 15 / 60, against 8 / 60 for Bare and 7 / 60 for a frozen Auto-K bank. The gain shows up in mining, combat, and crafting.
-    </p>
     <p class="has-text-centered" style="color: #555; max-width: 760px; margin: 0 auto 16px;">
       The left two runs fail. The right run uses that transferred knowledge and succeeds.
     </p>
