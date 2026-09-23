@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Knowledge–Probing Co-Evolution for Adaptive Gaming Harnesses. Test-time harness evolution around a frozen gaming VLA.">
+  <title>Knowledge–Probing Co-Evolution for Adaptive Gaming Harnesses</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background-color: #fcfcfc;
+      color: #2b2b2b;
+    }
+    .title-color {
+      background: linear-gradient(45deg, #e45858, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+    .subtitle-small {
+      font-size: 1.35rem !important;
+      margin-top: 10px !important;
+      font-weight: 400;
+      color: #4a4a4a;
+    }
+    .publication-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .button-gap { margin: 5px; }
+    .section { padding: 2.6rem 1.5rem; }
+    .container.is-max-desktop { max-width: 980px; }
+    .container.is-wide { max-width: 1180px; }
+    .anchor-row {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      font-size: 0.95rem;
+    }
+    .anchor-row a { color: #3d4f66; }
+    .gray-box-container {
+      background-color: #f5f5f5;
+      border-radius: 15px;
+      padding: 22px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .figure-frame {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #e6e6e6;
+      background: #fff;
+    }
+    .figure-narrow {
+      display: block;
+      width: 84%;
+      margin-inline: auto;
+    }
+    .train-stack {
+      display: grid;
+      gap: 14px;
+      margin: 8px 0 22px;
+    }
+    .caption {
+      color: #555;
+      margin-top: 8px;
+      line-height: 1.55;
+    }
+    .citation-box {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 10px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    table.results { font-size: 0.86rem; }
+    table.results td, table.results th { text-align: center; vertical-align: middle; }
+    table.results td:first-child, table.results th:first-child { text-align: left; }
+    h3.block-title {
+      margin: 32px 0 8px;
+      text-align: center;
+      font-size: 1.35rem;
+    }
+    .table.is-striped tbody tr.ours td {
+      background-color: #e7f1ff !important;
+      font-weight: 650;
+    }
+    .top-bg-wrapper {
+      position: relative;
+      background-color: #f0f4f9;
+      padding-bottom: 1.4rem;
+    }
+    .bg-layer {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .bg-grid-3d {
+      position: absolute;
+      top: 10%;
+      left: -50%;
+      width: 200%;
+      height: 150%;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.9) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.9) 2px, transparent 2px);
+      background-size: 80px 80px;
+      transform: perspective(1000px) rotateX(72deg);
+      transform-origin: top center;
+    }
+    .wireframe-obj { position: absolute; opacity: 0.85; }
+    .wireframe-obj svg { animation: float-up-down 6s ease-in-out infinite; }
+    @keyframes float-up-down {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .obj-left { top: 22%; left: 8%; }
+    .obj-right { top: 28%; right: 8%; }
+    .obj-right svg { animation-delay: -3s; }
+    .bg-fade {
+      position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 280px;
+      background: linear-gradient(to bottom, rgba(252,252,252,0) 0%, #fcfcfc 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .content-layer { position: relative; z-index: 2; }
+    .video-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+    .video-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .video-wrapper { text-align: center; }
+    .video-wrapper h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #3a3a3a;
+    }
+    video.clip {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background: #111;
+      display: block;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      border-radius: 999px;
+      padding: 2px 8px;
+      margin-right: 6px;
+      vertical-align: 1px;
+    }
+    .badge.fail { background: #fff1f0; color: #b42318; border: 1px solid #f3c3bd; }
+    .badge.ok { background: #ecfdf3; color: #067647; border: 1px solid #abefc6; }
+    .colhead {
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 8px 6px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+    }
+    .colhead.fail { color: #b42318; background: #fff1f0; }
+    .colhead.ok { color: #067647; background: #ecfdf3; }
+    .task-title {
+      margin: 22px 0 10px;
+      font-size: 1.15rem;
+      font-weight: 750;
+    }
+    .task-title:first-of-type { margin-top: 8px; }
+    @media (max-width: 860px) {
+      .video-grid-3, .video-grid-2 { grid-template-columns: 1fr; }
+      .figure-narrow { width: 100%; }
+      .obj-left, .obj-right { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bg-wrapper">
+  <div class="bg-layer">
+    <div class="bg-grid-3d"></div>
+    <div class="wireframe-obj obj-left">
+      <svg width="120" height="90" viewBox="0 0 120 90" fill="none">
+        <path d="M20 35 L60 15 L100 35 L60 55 Z" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+        <path d="M20 35 L20 62 L60 82 L60 55" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+        <path d="M100 35 L100 62 L60 82" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="wireframe-obj obj-right">
+      <svg width="130" height="90" viewBox="0 0 130 90" fill="none">
+        <path d="M25 38 L65 18 L105 38 L65 58 Z" stroke="rgba(255,255,255,0.55)" stroke-width="2"/>
+        <path d="M25 38 L25 64 L65 84 L65 58" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+        <path d="M105 38 L105 64 L65 84" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+  <div class="bg-fade"></div>
+
+  <div class="content-layer">
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop" style="margin-top: 28px;">
+          <div class="has-text-centered">
+            <h1 class="title is-2 publication-title">
+              <span class="title-color">Knowledge–Probing Co-Evolution</span> for Adaptive Gaming Harnesses
+            </h1>
+            <h2 class="subtitle subtitle-small">
+              Test-time harness evolution around a frozen gaming VLA
+            </h2>
+            <div class="publication-links" style="margin-top: 18px;">
+              <a href="assets/paper/paper.pdf" class="button is-normal is-rounded is-dark button-gap">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>Paper</span>
+              </a>
+              <a href="#videos" class="button is-normal is-rounded is-dark button-gap">
+                <span class="icon"><i class="fas fa-play"></i></span>
+                <span>Videos</span>
+              </a>
+              <a href="#citation" class="button is-normal is-rounded is-dark button-gap">
+                <span class="icon"><i class="fas fa-quote-right"></i></span>
+                <span>BibTeX</span>
+              </a>
+            </div>
+            <div class="anchor-row">
+              <a href="#method">Method</a>
+              <a href="#results">Results</a>
+              <a href="#videos">Videos</a>
+              <a href="#knowledge">Knowledge</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="abstract" style="padding-top: 0.4rem;">
+      <div class="container is-max-desktop">
+        <div class="has-text-centered">
+          <h2 class="title is-3">Abstract</h2>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            Long-horizon gaming requires an agent to diagnose stalled execution, recover from failures, and reuse that experience on later tasks.
+            We introduce <strong>Test-Time Harness Evolution (TTHE)</strong>, which keeps a gaming vision-language-action model frozen and evolves only the harness around it.
+            A fast loop executes actions. A slow research loop diagnoses failures, proposes harness changes, and checks them in paired sandbox rollouts.
+            Transferable recovery knowledge suggests what to try. Active probes test when that knowledge applies. Validated outcomes then update both future probes and the knowledge bank.
+            On 149 Minecraft tasks spanning mining, combat, and crafting, knowledge-guided evolution covers more tasks than the bare actor and a hand-written fixed harness. The full probing loop improves further over knowledge-only search.
+          </p>
+          <p>
+            Can recovery knowledge guide what to probe, while probe outcomes reveal which knowledge applies?
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<section class="section" id="method">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <p class="has-text-centered" style="color: #555; margin-bottom: 16px;">
+      The same frozen VLA is shared by Bare, Auto-K, and TTHE. Only the harness changes.
+    </p>
+    <div class="gray-box-container">
+      <img class="figure-frame figure-narrow" src="assets/figures/overview.jpg" alt="Bare and Auto-K fail a sand-mining task. TTHE detects the failure, probes, applies recovery knowledge, and completes it.">
+      <p class="is-size-7 caption">
+        Sand mining with one frozen VLA. Bare executes the actor directly and fails. Auto-K proposes harness edits from a knowledge bank and still fails. TTHE adds probing evidence, accepts a verified edit, and completes the block.
+      </p>
+    </div>
+
+    <div class="gray-box-container" style="margin-top: 22px;">
+      <img class="figure-frame figure-narrow" src="assets/figures/method.jpg" alt="Harness evolution loop: probing, proposal, and paired sandbox validation around a frozen VLA.">
+      <p class="is-size-7 caption">
+        Action probes collect evidence about an ambiguous stall. Knowledge probes test a stored recovery strategy. A vision-language researcher proposes a harness patch, which is kept only when paired sandbox evaluation beats the incumbent. The VLA weights stay fixed.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="results">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+    <div class="train-stack">
+      <img class="figure-frame" src="assets/figures/training_sft.jpg" alt="Supervised fine-tuning curves for the Minecraft VLA.">
+      <img class="figure-frame" src="assets/figures/training_grpo.jpg" alt="GRPO training curves. The checkpoint is frozen before harness evolution.">
+    </div>
+    <p class="is-size-7 caption" style="margin-bottom: 28px;">
+      The actor is trained with supervised fine-tuning and then GRPO. Harness adaptation starts from the frozen GRPO checkpoint and does not update these weights.
+    </p>
+    <p class="has-text-centered" style="color: #555;">
+      149 OpenHA Minecraft tasks. Primary setting: legacy protocol, temperature 0.7, one frozen GRPO checkpoint.
+    </p>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Overall</th>
+            <th>Mine</th>
+            <th>Kill</th>
+            <th>Craft</th>
+            <th>Rescued</th>
+            <th>Accept</th>
+            <th>HO-win</th>
+            <th>Probe-only</th>
+            <th>Replay</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bare</td>
+            <td>39 / 149 (26.2%)</td>
+            <td>20 / 50</td>
+            <td>18 / 49</td>
+            <td>1 / 50</td>
+            <td>0</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Fixed harness</td>
+            <td>50 / 149 (33.6%)</td>
+            <td>23 / 50</td>
+            <td>25 / 49</td>
+            <td>2 / 50</td>
+            <td>11</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Auto-K</td>
+            <td>63 / 149 (42.3%)</td>
+            <td>25 / 50</td>
+            <td>30 / 49</td>
+            <td>8 / 50</td>
+            <td>24</td>
+            <td>14</td>
+            <td>5</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+          <tr class="ours">
+            <td>TTHE</td>
+            <td>70 / 149 (47.0%)</td>
+            <td>29 / 50</td>
+            <td>33 / 49</td>
+            <td>8 / 50</td>
+            <td>31</td>
+            <td>14</td>
+            <td>5</td>
+            <td>3</td>
+            <td>17</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="is-size-7 caption">
+      Rescued counts tasks that Bare fails and the method solves. Accept is a patch that beats the incumbent on the search seed. HO-win is an accepted patch that still improves on a disjoint holdout seed. Probe-only counts tasks that Knowledge Search misses and probing replay solves. At temperature 0, TTHE solves 44 / 149 and Auto-K solves 41 / 149. Auto-K and TTHE each accept 14 patches and record 5 HO-wins, but only four accepted cases and one HO-win overlap.
+    </p>
+
+    <h3 class="block-title">Cross-seed robustness</h3>
+    <p class="has-text-centered" style="color: #555;">
+      The 110 tasks Bare fails, legacy protocol, temperature 0.7. Auto-K is frozen at test time. TTHE keeps the probing loop.
+    </p>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Seed</th>
+            <th>Success</th>
+            <th>Mine</th>
+            <th>Kill</th>
+            <th>Craft</th>
+            <th>Probe-only</th>
+            <th>Replay</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Auto-K</td>
+            <td>101</td>
+            <td>24 / 110</td>
+            <td>5 / 30</td>
+            <td>12 / 31</td>
+            <td>7 / 49</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+          <tr class="ours">
+            <td>TTHE</td>
+            <td>101</td>
+            <td>31 / 110</td>
+            <td>9 / 30</td>
+            <td>15 / 31</td>
+            <td>7 / 49</td>
+            <td>3</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td>Auto-K</td>
+            <td>202</td>
+            <td>8 / 110</td>
+            <td>5 / 30</td>
+            <td>2 / 31</td>
+            <td>1 / 49</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+          <tr class="ours">
+            <td>TTHE</td>
+            <td>202</td>
+            <td>30 / 110</td>
+            <td>9 / 30</td>
+            <td>14 / 31</td>
+            <td>7 / 49</td>
+            <td>3</td>
+            <td>11</td>
+          </tr>
+          <tr>
+            <td>Auto-K</td>
+            <td>303</td>
+            <td>15 / 110</td>
+            <td>4 / 30</td>
+            <td>9 / 31</td>
+            <td>2 / 49</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+          <tr class="ours">
+            <td>TTHE</td>
+            <td>303</td>
+            <td>25 / 110</td>
+            <td>7 / 30</td>
+            <td>12 / 31</td>
+            <td>6 / 49</td>
+            <td>1</td>
+            <td>16</td>
+          </tr>
+          <tr>
+            <td>Auto-K</td>
+            <td>Mean</td>
+            <td>15.7 ± 8.0</td>
+            <td>4.7 ± 0.6</td>
+            <td>7.7 ± 5.1</td>
+            <td>3.3 ± 3.2</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+          <tr class="ours">
+            <td>TTHE</td>
+            <td>Mean</td>
+            <td>28.7 ± 3.2</td>
+            <td>8.3 ± 1.2</td>
+            <td>13.7 ± 1.5</td>
+            <td>6.7 ± 0.6</td>
+            <td>2.3 ± 1.2</td>
+            <td>14.7 ± 3.2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="is-size-7 caption">
+      TTHE rescues 7, 22, and 10 more tasks than Auto-K on the three seeds. On seeds 202 and 303 together, TTHE alone solves 36 tasks that Auto-K misses, against 4 in the other direction.
+    </p>
+
+    <h3 class="block-title">Where the extra successes come from</h3>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
+        <thead>
+          <tr>
+            <th>Search-time statistic</th>
+            <th>Overall</th>
+            <th>Mine</th>
+            <th>Kill</th>
+            <th>Craft</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Knowledge Search best</td>
+            <td>28 / 110</td>
+            <td>8</td>
+            <td>14</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>Probing-enabled replay</td>
+            <td>17 / 110</td>
+            <td>4</td>
+            <td>9</td>
+            <td>4</td>
+          </tr>
+          <tr class="ours">
+            <td>Union</td>
+            <td>31 / 110</td>
+            <td>9</td>
+            <td>15</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>Strict probe-only</td>
+            <td>3</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="is-size-7 caption">
+      Fourteen tasks are solved by both search and replay, so the 17 replay successes are not 17 new tasks. Three tasks stay unsolved by Knowledge Search and succeed only when probing is enabled: one mining, one combat, and one crafting task. This is a search-time diagnostic, separate from the 31 rescued tasks in the final coverage table.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="videos" style="background: #fff;">
+  <div class="container is-wide">
+    <h2 class="title is-3 has-text-centered">Qualitative Comparisons</h2>
+    <p class="has-text-centered" style="color: #555; max-width: 760px; margin: 0 auto 16px;">
+      Three videos in each row, in the same order as the paper figure. The left two runs fail. The right run succeeds. Every clip uses the same frozen VLA.
+    </p>
+
+    <div class="gray-box-container">
+      <div class="video-grid-3" style="margin-bottom: 8px;">
+        <div class="colhead fail">Bare · Failure</div>
+        <div class="colhead fail">Auto-K · Failure</div>
+        <div class="colhead ok">TTHE · Success</div>
+      </div>
+
+      <h3 class="task-title">Mining · sand</h3>
+      <div class="video-grid-3">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/sand-bare-poster.jpg">
+            <source src="assets/videos/sand-bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/sand-autok-poster.jpg">
+            <source src="assets/videos/sand-autok.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/sand-probing-poster.jpg">
+            <source src="assets/videos/sand-probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <h3 class="task-title">Combat · ghast</h3>
+      <div class="video-grid-3">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/ghast-bare-poster.jpg">
+            <source src="assets/videos/ghast-bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/ghast-autok-poster.jpg">
+            <source src="assets/videos/ghast-autok.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/ghast-probing-poster.jpg">
+            <source src="assets/videos/ghast-probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <h3 class="task-title">Crafting</h3>
+      <div class="video-grid-3">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/craft-bare-poster.jpg">
+            <source src="assets/videos/craft-bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/craft-probing-poster.jpg">
+            <source src="assets/videos/craft-probing.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/craft-autok-poster.jpg">
+            <source src="assets/videos/craft-autok.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <p class="is-size-7 caption">
+        Same order as the paper figure. On sand mining, Auto-K keeps the generic instruction “Gather sand from the desert” and does not finish within 100 turns. TTHE turns the probe evidence into “look down, center the crosshair on a sand block, and continuously attack,” and completes the block in 29 turns.
+      </p>
+    </div>
+
+    <h3 class="title is-4 has-text-centered" style="margin-top: 42px;">Cross-seed</h3>
+    <p class="has-text-centered" style="color: #555; max-width: 760px; margin: 0 auto 16px;">
+      Rows under one task are different seeds. The left two runs fail. The right run succeeds.
+    </p>
+    <div class="gray-box-container">
+      <div class="video-grid-3" style="margin-bottom: 8px;">
+        <div class="colhead fail">Bare · Failure</div>
+        <div class="colhead fail">Auto-K · Failure</div>
+        <div class="colhead ok">TTHE · Success</div>
+      </div>
+
+      <h3 class="task-title">Combat · bee</h3>
+      <div class="video-grid-3">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/bee_seed101_bare-poster.jpg">
+            <source src="assets/videos/cross_task/bee_seed101_bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/bee_seed101_auto-poster.jpg">
+            <source src="assets/videos/cross_task/bee_seed101_auto.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/bee_seed101_probing-poster.jpg">
+            <source src="assets/videos/cross_task/bee_seed101_probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="video-grid-3" style="margin-top: 14px;">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/bee_seed909_bare-poster.jpg">
+            <source src="assets/videos/cross_task/bee_seed909_bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/bee_seed909_auto-poster.jpg">
+            <source src="assets/videos/cross_task/bee_seed909_auto.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/bee_seed909_probing-poster.jpg">
+            <source src="assets/videos/cross_task/bee_seed909_probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <h3 class="task-title">Crafting · dark oak planks</h3>
+      <div class="video-grid-3">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/dark_oak_planks_seed202_bare-poster.jpg">
+            <source src="assets/videos/cross_task/dark_oak_planks_seed202_bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/dark_oak_planks_seed202_auto-poster.jpg">
+            <source src="assets/videos/cross_task/dark_oak_planks_seed202_auto.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/dark_oak_planks_seed202_probing-poster.jpg">
+            <source src="assets/videos/cross_task/dark_oak_planks_seed202_probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="video-grid-3" style="margin-top: 14px;">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/dark_oak_planks_seed909_bare-poster.jpg">
+            <source src="assets/videos/cross_task/dark_oak_planks_seed909_bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/dark_oak_planks_seed909_auto-poster.jpg">
+            <source src="assets/videos/cross_task/dark_oak_planks_seed909_auto.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/dark_oak_planks_seed909_probing-poster.jpg">
+            <source src="assets/videos/cross_task/dark_oak_planks_seed909_probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="title is-4 has-text-centered" style="margin-top: 42px;">Frozen transfer</h3>
+    <p class="has-text-centered" style="color: #555; max-width: 760px; margin: 0 auto 16px;">
+      Knowledge learned on earlier tasks is frozen and applied to unseen tasks. The left two runs fail. The right run uses that transferred knowledge and succeeds.
+    </p>
+    <div class="gray-box-container">
+      <div class="video-grid-3" style="margin-bottom: 8px;">
+        <div class="colhead fail">Bare · Failure</div>
+        <div class="colhead fail">Auto-K · Failure</div>
+        <div class="colhead ok">Transferred · Success</div>
+      </div>
+
+      <h3 class="task-title">Mining · andesite</h3>
+      <div class="video-grid-3">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/andesite_seed505_bare-poster.jpg">
+            <source src="assets/videos/frozen_transfer/andesite_seed505_bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/andesite_seed505_auto_k-poster.jpg">
+            <source src="assets/videos/frozen_transfer/andesite_seed505_auto_k.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>Transferred</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/andesite_seed505_auto_k_probing-poster.jpg">
+            <source src="assets/videos/frozen_transfer/andesite_seed505_auto_k_probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <h3 class="task-title">Mining · smooth stone</h3>
+      <div class="video-grid-3">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/smooth_stone_seed101_bare-poster.jpg">
+            <source src="assets/videos/frozen_transfer/smooth_stone_seed101_bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/smooth_stone_seed101_auto-poster.jpg">
+            <source src="assets/videos/frozen_transfer/smooth_stone_seed101_auto.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>Transferred</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/smooth_stone_seed101_probing-poster.jpg">
+            <source src="assets/videos/frozen_transfer/smooth_stone_seed101_probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <h3 class="task-title">Combat · ghast</h3>
+      <div class="video-grid-3">
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Bare</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/ghast_seed101_bare-poster.jpg">
+            <source src="assets/videos/frozen_transfer/ghast_seed101_bare.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge fail">Failure</span>Auto-K</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/ghast_seed101_auto_k-poster.jpg">
+            <source src="assets/videos/frozen_transfer/ghast_seed101_auto_k.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-wrapper">
+          <h4><span class="badge ok">Success</span>Transferred</h4>
+          <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/frozen_transfer/ghast_seed101_auto_k_probing-poster.jpg">
+            <source src="assets/videos/frozen_transfer/ghast_seed101_auto_k_probing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="knowledge">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Transferable Knowledge</h2>
+    <div class="gray-box-container">
+      <img class="figure-frame figure-narrow" src="assets/figures/knowledge.jpg" alt="Recovery knowledge linking failure contexts to reusable interventions across mining, combat, and crafting.">
+      <p class="is-size-7 caption">
+        Promoted strategies, candidate knowledge, recurring patterns, and context-conditioned probes connect a failure to an intervention later tasks can reuse.
+      </p>
+    </div>
+
+    <h3 class="block-title">Sequential reuse</h3>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
+        <thead>
+          <tr>
+            <th>Statistic</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Adaptation tasks</td><td>110</td></tr>
+          <tr><td>Tasks that select prior-task knowledge</td><td>107</td></tr>
+          <tr><td>Prior-knowledge selections</td><td>840</td></tr>
+          <tr><td>Distinct skill–target relations</td><td>156</td></tr>
+          <tr><td>Cross-family reuse relations</td><td>101</td></tr>
+          <tr><td>Successes that explicitly use prior knowledge</td><td>9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="is-size-7 caption">
+      Counts are taken from the first rollout of each task, before a task-specific patch is proposed. The inherited harness also finishes 12 tasks before local search.
+    </p>
+
+    <h3 class="block-title">A fixed knowledge bank is not enough</h3>
+    <p class="has-text-centered" style="color: #555;">
+      One rollout on the same 110 Bare failures. Knowledge text stays frozen. No new patch is proposed.
+    </p>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
+        <thead>
+          <tr>
+            <th>Variant</th>
+            <th>Success</th>
+            <th>Mine</th>
+            <th>Kill</th>
+            <th>Craft</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Probe only</td>
+            <td>15 / 110</td>
+            <td>5 / 30</td>
+            <td>6 / 31</td>
+            <td>4 / 49</td>
+          </tr>
+          <tr>
+            <td>Static knowledge, not injected</td>
+            <td>9 / 110</td>
+            <td>2 / 30</td>
+            <td>6 / 31</td>
+            <td>1 / 49</td>
+          </tr>
+          <tr>
+            <td>Static knowledge, no selection update</td>
+            <td>13 / 110</td>
+            <td>4 / 30</td>
+            <td>5 / 31</td>
+            <td>4 / 49</td>
+          </tr>
+          <tr>
+            <td>Static knowledge, adaptive selection</td>
+            <td>13 / 110</td>
+            <td>6 / 30</td>
+            <td>5 / 31</td>
+            <td>2 / 49</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="is-size-7 caption">
+      None of the fixed banks beats probing with an empty bank. Injecting a frozen recovery bank and updating which entry is selected solves 13 tasks, against 15 for probing alone.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="limitations">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Limitations</h2>
+    <div class="content">
+      <ol>
+        <li><strong>Single backbone.</strong> Results use one frozen policy checkpoint in Minecraft. Other actors and games are not tested.</li>
+        <li><strong>Search cost.</strong> Each candidate needs environment rollouts, VLA inference, and researcher calls, plus paired and holdout checks.</li>
+        <li><strong>Seen tasks.</strong> The reported replay covers tasks encountered during adaptation, not a disjoint task set.</li>
+        <li><strong>Bounded edits.</strong> Delayed success credit is heuristic, and the harness can only change the exposed configuration. It cannot exceed what the frozen actor can execute.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="citation">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Citation</h2>
+    <pre class="citation-box" id="bibtex">@misc{tthe2027knowledge,
+  title = {Knowledge--Probing Co-Evolution for Adaptive Gaming Harnesses},
+  year  = {2027},
+  note  = {Manuscript}
+}</pre>
+    <div class="has-text-centered" style="margin-top: 12px;">
+      <button class="button is-rounded is-dark" id="copy-btn" type="button">Copy BibTeX</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" style="padding: 1.5rem; background: #f7f7f7;">
+  <div class="content has-text-centered">
+    <p>Knowledge–Probing Co-Evolution for Adaptive Gaming Harnesses</p>
+  </div>
+</footer>
+
+<script>
+  const videos = [...document.querySelectorAll("video")];
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      if (isIntersecting) target.play().catch(() => {});
+      else target.pause();
+    });
+  }, { threshold: 0.35 });
+  videos.forEach((video) => videoObserver.observe(video));
+
+  const copyButton = document.getElementById("copy-btn");
+  copyButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(document.getElementById("bibtex").textContent.trim());
+      copyButton.textContent = "Copied";
+      setTimeout(() => { copyButton.textContent = "Copy BibTeX"; }, 1600);
+    } catch {
+      copyButton.textContent = "Select and copy above";
+    }
+  });
+</script>
+</body>
+</html>
