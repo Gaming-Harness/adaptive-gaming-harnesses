@@ -943,13 +943,18 @@
 <section class="section" id="limitations">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Limitations</h2>
+    <p class="has-text-centered" style="color: #555; max-width: 760px; margin: 0 auto 16px;">
+      TTHE combines adaptive probing, sandbox verification, and transferable recovery knowledge around a frozen VLA. Minecraft experiments improve task coverage without further actor training, and frozen evaluation on unseen tasks shows that the evolved harness transfers beyond the tasks encountered during adaptation.
+    </p>
     <div class="content">
       <ol>
-        <li><strong>Single backbone.</strong> Results use one frozen policy checkpoint in Minecraft. Other actors and games are not tested.</li>
-        <li><strong>Search cost.</strong> Each candidate needs environment rollouts, VLA inference, and researcher calls, plus paired and holdout checks.</li>
-        <li><strong>Seen tasks.</strong> The reported replay covers tasks encountered during adaptation, not a disjoint task set.</li>
-        <li><strong>Bounded edits.</strong> Delayed success credit is heuristic, and the harness can only change the exposed configuration. It cannot exceed what the frozen actor can execute.</li>
+        <li><strong>Single backbone.</strong> Evaluation focuses on one policy backbone and one gaming environment. Broader validation across models and environments is left for future work.</li>
+        <li><strong>Search cost.</strong> Harness evolution needs additional environment rollouts, VLA inference, and multimodal researcher calls, so adaptation costs more than fixed execution.</li>
+        <li><strong>Heuristic credit.</strong> Delayed success credit is heuristic and may not precisely identify the contribution of individual probes.</li>
       </ol>
+      <p class="has-text-centered" style="color: #555;">
+        Future work should improve adaptation efficiency and evaluate knowledge–probing co-evolution across broader models and task distributions.
+      </p>
     </div>
   </div>
 </section>
