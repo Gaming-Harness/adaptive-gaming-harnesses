@@ -35,6 +35,11 @@
       flex-wrap: wrap;
     }
     .button-gap { margin: 5px; }
+    .paper-dead {
+      pointer-events: none !important;
+      cursor: default !important;
+      opacity: 0.55;
+    }
     .section { padding: 2.6rem 1.5rem; }
     .container.is-max-desktop { max-width: 980px; }
     .container.is-wide { max-width: 1180px; }
@@ -232,10 +237,10 @@
               Test-time harness evolution around a frozen gaming VLA
             </h2>
             <div class="publication-links" style="margin-top: 18px;">
-              <span class="button is-normal is-rounded is-dark button-gap" style="cursor: default;">
+              <button type="button" class="button is-normal is-rounded is-dark button-gap paper-dead" disabled>
                 <span class="icon"><i class="fas fa-file-pdf"></i></span>
                 <span>Paper</span>
-              </span>
+              </button>
               <a href="#videos" class="button is-normal is-rounded is-dark button-gap">
                 <span class="icon"><i class="fas fa-play"></i></span>
                 <span>Videos</span>
