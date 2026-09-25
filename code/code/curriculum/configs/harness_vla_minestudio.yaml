@@ -1,0 +1,35 @@
+# Harness-VLA: collaborator_b Qwen3-VL + MineStudio peony
+# Align budget with OpenHA eval: openha_max_turns ≈ 100 (one VLA chunk ≈ one turn).
+#
+#   cd project_root
+#   python -m curriculum.harness_vla_agent \
+#     --config curriculum/configs/harness_vla_minestudio.yaml
+
+seed: 0
+logdir: curriculum/outputs/harness_vla_minestudio
+backend: minestudio
+vla_mode: hf
+vla_model_path: /path/to/vla_checkpoint
+vla_device: cuda
+vla_dtype: bfloat16
+action_chunk_len: 4
+# Env / skill step budget ≈ OpenHA max_turns=100
+max_steps: 100
+ticks_per_action: 4
+task_config: /path/to/openha_eval/tasks/0007_mine_block_peony.json
+img_save_dir: curriculum/outputs/harness_vla_sandbox_images
+success_reward_thresh: 0.5
+soft_rollback: true
+
+planner_model: gemini-2.5-flash
+planner_base_url: https://api.example.com/v1/chat/completions
+# Planner may call qwen_skill several times; each call can run up to skill_max_chunks
+# VLA chunks (≈ OpenHA turns). 5 × 20 = 100 turns budget.
+max_planner_steps: 12
+skill_max_chunks: 20
+
+# Do NOT override VLA actions with memory/verify (last run was stuck on forward)
+probe_enabled: false
+verify_enabled: false
+prefer_memory_action: false
+start: strong

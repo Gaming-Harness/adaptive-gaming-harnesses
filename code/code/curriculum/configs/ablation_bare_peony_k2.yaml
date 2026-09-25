@@ -1,0 +1,33 @@
+# Ablation: bare frozen VLA (no probe / memory / verify / recover).
+# Same seeds as harness arm for paired comparison. n_rounds=0 → eval only.
+
+seed: 0
+logdir: curriculum/outputs/ablation_bare_k2
+n_rounds: 0
+n_eval_episodes: 2
+eval_seeds: [101, 202]
+holdout_seeds: [909]
+accept_eps: 0.01
+start: strong
+backend: minestudio
+vla_mode: hf
+vla_model_path: /path/to/vla_checkpoint
+vla_device: cuda
+vla_dtype: bfloat16
+action_chunk_len: 4
+max_steps: 100
+ticks_per_action: 4
+checkpoint_every: 8
+
+probe_enabled: false
+memory_enabled: false
+verify_enabled: false
+recover_enabled: false
+prefer_memory_action: false
+
+proposer_mode: random
+
+task_config: /path/to/openha_eval/tasks/0007_mine_block_peony.json
+img_save_dir: curriculum/outputs/harness_sandbox_images_ablation_bare_k2
+success_reward_thresh: 0.5
+soft_rollback: true

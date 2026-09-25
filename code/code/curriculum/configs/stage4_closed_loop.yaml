@@ -1,0 +1,57 @@
+# Stage 4: Alternating closed loop
+# --------------------------------
+# Outer: VLA interact → update WM → imagination → improve VLA → reality gap
+
+num_rounds: 3
+eval_n: 32
+logdir: curriculum/outputs/stage4_closed_loop
+
+stage2:
+  wm_backend: toy
+  stage1_bundle: curriculum/outputs/stage1_bundle.json
+  data_root: data/mc_vpt_long45
+  max_clips: 6
+  num_frame_per_block: 3
+  block_stride: 2
+  device: auto
+  dtype: bfloat16
+  policy_hidden: 256
+  real_ratio: 0.85
+  real_ratio_end: 0.55
+  expert_ratio: 0.5
+  capacity_policy: 20000
+  capacity_imagined: 10000
+  collect_policy: 16
+  collect_imagined: 8
+  batch_size: 32
+  dyn_reward_weight: 0.5
+  lr: 3.0e-4
+  weight_decay: 0.01
+  gamma: 0.99
+  clip_eps: 0.2
+  vf_coef: 0.5
+  ent_coef: 0.01
+  max_steps: 30
+  log_interval: 10
+  save_interval: 30
+
+stage3:
+  wm_backend: toy
+  data_root: data/mc_vpt_long45
+  max_clips: 6
+  num_frame_per_block: 3
+  block_stride: 2
+  device: auto
+  policy_hidden: 256
+  expert_ratio: 0.5
+  lambda_anchor: 1.0
+  lambda_expert: 0.5
+  collect_policy: 16
+  batch_size: 32
+  lr: 1.0e-4
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  max_steps: 25
+  log_interval: 5
+  save_interval: 25
+  use_consistency_finetune: false

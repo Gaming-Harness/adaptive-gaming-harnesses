@@ -1,0 +1,42 @@
+# Stage 2: Frozen WM + Online RL VLA
+# ------------------------------------
+# WM is frozen. Only π updates.
+# Start with mostly real rollouts; gradually allow more imagination.
+
+wm_backend: toy          # toy | full
+stage1_bundle: curriculum/outputs/stage1_bundle.json
+toy_wm_ckpt: null        # optional pretrained toy dynamics
+
+data_root: data/mc_vpt_long45
+max_clips: 6
+num_frame_per_block: 3
+block_stride: 2
+
+device: auto
+dtype: bfloat16
+policy_hidden: 256
+policy_ckpt: null
+
+# mix: real vs imagination
+real_ratio: 0.80
+real_ratio_end: 0.60     # anneal toward more imagination
+expert_ratio: 0.50       # within real: expert vs policy buffer
+capacity_policy: 20000
+capacity_imagined: 10000
+
+collect_policy: 16
+collect_imagined: 8
+batch_size: 32
+dyn_reward_weight: 0.5
+
+lr: 3.0e-4
+weight_decay: 0.01
+gamma: 0.99
+clip_eps: 0.2
+vf_coef: 0.5
+ent_coef: 0.01
+
+max_steps: 50
+log_interval: 5
+save_interval: 25
+logdir: curriculum/outputs/stage2

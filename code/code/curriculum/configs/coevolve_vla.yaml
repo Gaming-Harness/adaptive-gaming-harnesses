@@ -1,0 +1,53 @@
+# Co-evolve: base Qwen3-VL base + MineStudio sandbox + pretrained WM
+# VLA RL on ARES side uses GRPO (config_coevolve_wm.py).
+# Sandbox token: set MINESTUDIO_TOKEN.
+
+vla_model_path: /path/to/vla_checkpoint
+vla_mode: hf
+vla_device: cuda
+vla_dtype: bfloat16
+max_new_tokens: 256
+instruction: "Explore and progress the Minecraft task."
+
+use_sandbox: true
+minestudio_endpoint: https://model.example.com/sandboxGateway/system/714
+# token: set MINESTUDIO_TOKEN
+task_dir: /path/to/openha_tasks
+encode_vae: true
+pretrained_model_path: pretrained_wm
+vae_dtype: float16
+
+data_root: data/mc_vpt_long45
+max_clips: 6
+num_frame_per_block: 3
+block_stride: 2
+expert_ratio: 0.5
+
+toy_wm_ckpt: curriculum/outputs/toy_wm0.pt
+wm_lr: 1.0e-4
+lambda_sd: 1.0
+lambda_expert: 0.5
+# Action bridge: hard codec only (no learnable ActionProjection for L2).
+train_action_proj: false
+lambda_proj_align: 0.0
+proj_lr: 1.0e-4
+# Cascaded WAM ActionHead OFF for L2 path (use VLA→pretrained_wm hard codec only).
+train_cascaded_wam: false
+lambda_act: 0.0
+lambda_open: 0.0
+act_lr: 1.0e-4
+# Sidecar: prefer wm_epochs over tiny fixed step counts.
+wm_epochs: 3
+wm_steps_min: 100
+ema_tau: 0.99
+weight_decay: 0.01
+max_grad_norm: 1.0
+batch_size: 16
+
+max_turns: 20
+max_steps: 50
+collect_n: 8
+log_interval: 1
+save_interval: 5
+device: auto
+logdir: curriculum/outputs/coevolve_vla

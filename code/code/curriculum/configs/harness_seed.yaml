@@ -1,0 +1,57 @@
+name: seed_harness
+version: 0
+task_prompt: >-
+  You are a Minecraft agent. Break the goal into subgoals, prefer safe forward
+  progress, and avoid repeating failed actions.
+decompose_prompt: >-
+  Decompose the instruction into 3-6 ordered subgoals. Return one subgoal per line.
+recovery_prompt: >-
+  Previous action failed. Return to the last successful checkpoint shown in memory,
+  then retry the current subgoal with a different action.
+probe:
+  enabled: true
+  every_n_steps: 4
+  budget_per_episode: 3
+  prefer_uncertain: true
+  action_pool:
+    - forward
+    - back
+    - left
+    - right
+    - turn_left
+    - turn_right
+    - noop
+  write_on_pass: true
+  min_confidence: 0.45
+memory:
+  enabled: true
+  merge_thresh: 0.85
+  max_items: 256
+  min_confidence: 0.45
+  retrieve_topk: 3
+  inject_into_prompt: true
+  write_success: true
+  write_failure: true
+  write_probe: true
+  decay_unused: true
+  revoke_on_fail_streak: 2
+verify:
+  enabled: true
+  abstain_thresh: 0.72
+  block_on_abstain: true
+  prefer_memory_action: true
+  memory_sim_thresh: 0.55
+recover:
+  enabled: true
+  max_retries: 3
+  rollback_steps: 1
+  use_memory_checkpoint: true
+  replan_with_prompt: true
+runtime:
+  max_steps: 32
+  action_chunk_len: 4
+  checkpoint_every: 8
+  backend: stub
+  vla_mode: stub
+  instruction: Explore and progress the Minecraft task.
+meta: {}

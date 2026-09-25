@@ -1,0 +1,37 @@
+seed: 0
+logdir: curriculum/outputs/auto_harness_action_token_sanity
+
+# Keep it short: just 1 round, 1 eval seed.
+n_rounds: 1
+n_eval_episodes: 1
+eval_seeds: [101]
+holdout_seeds: [909]
+accept_eps: 0.01
+
+# Keep the same immutable foundation as the memory run.
+start: curriculum/outputs/auto_harness_hard_k1_t0/prior_harness_base.json
+preserve_harness_body: true
+
+success_memory_jsonl: curriculum/outputs/auto_harness_action_token_sanity/success_memory.jsonl
+
+# Use the stub runtime so we don't contend with GPU runs.
+backend: stub
+vla_mode: stub
+vla_protocol: minecraft_v1
+
+proposer_mode: llm
+proposer_model: gemini-2.5-flash
+proposer_temperature: 0.0
+proposer_vision: false
+proposer_max_frames: 2
+
+attribution_probes: false
+prefer_components: [probe, recover]
+
+# Any real task JSON works for stub; we pick a birch-leaves one.
+task_config: /path/to/openha_eval/tasks/0034_mine_block_birch_leaves.json
+
+img_save_dir: curriculum/outputs/auto_harness_action_token_sanity/search/images
+success_reward_thresh: 0.5
+soft_rollback: true
+

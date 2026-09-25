@@ -1,0 +1,25 @@
+# Live MineStudio + base Qwen3-VL (real frozen VLA)
+# Requires: GPU + MINESTUDIO token (OpenHA default ok)
+#
+#   cd project_root
+#   python -m curriculum.auto_harness_search \
+#     --config curriculum/configs/auto_harness_minestudio_hf.yaml
+
+seed: 0
+logdir: curriculum/outputs/auto_harness_minestudio_hf
+n_rounds: 4
+n_eval_episodes: 1
+accept_eps: 0.01
+start: strong
+backend: minestudio
+vla_mode: hf
+vla_model_path: /path/to/vla_checkpoint
+vla_device: cuda
+vla_dtype: bfloat16
+action_chunk_len: 4
+max_steps: 16
+ticks_per_action: 4
+task_config: /path/to/openha_tasks/0000_mine_block_oak_log.json
+img_save_dir: curriculum/outputs/harness_sandbox_images
+success_reward_thresh: 0.5
+soft_rollback: true

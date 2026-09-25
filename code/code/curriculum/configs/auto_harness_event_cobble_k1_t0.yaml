@@ -1,0 +1,38 @@
+# Event Auto on cobble — aligned with auto_harness_cobble_k1_t0 / hard queue.
+seed: 0
+logdir: curriculum/outputs/auto_harness_event_cobble_k1_t0
+n_rounds: 3
+n_eval_episodes: 1
+eval_seeds: [101]
+holdout_seeds: [909]
+accept_eps: 0.01
+start: strong
+preserve_harness_body: false
+proposer_mode: bank
+
+backend: minestudio
+vla_mode: hf
+vla_model_path: /path/to/vla_checkpoint
+vla_device: cuda
+vla_dtype: bfloat16
+vla_temperature: 0.0
+vla_do_sample: false
+action_chunk_len: 4
+max_steps: 100
+ticks_per_action: 4
+checkpoint_every: 8
+recover_max_retries: 2
+
+probe_on_stall: true
+probe_on_fail: true
+warmup_probes: 0
+stall_steps: 8
+routing_on_stall: observe
+routing_on_fail: recover
+observe_budget: 8
+probe_action_pool: [forward, attack, forward_attack, turn_left, look_up, look_down]
+
+task_config: /path/to/openha_eval/tasks/0001_mine_block_cobblestone.json
+img_save_dir: curriculum/outputs/harness_event_images_cobble_k1_t0
+success_reward_thresh: 0.5
+soft_rollback: true

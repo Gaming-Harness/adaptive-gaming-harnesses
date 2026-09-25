@@ -1,0 +1,89 @@
+# Reliable Auto Research MVP — Gaming World Models
+# ------------------------------------------------
+# Frozen contract + Discover→Probe→Compress + Evidence graph + Holdout transfer
+#
+# mechanism under test (NOT hyperparam search):
+#   causal_intervene_selective_update
+
+domain: gaming_world_model
+seed: 0
+mechanism_id: causal_intervene_selective_update
+
+wm_backend: toy
+toy_wm_ckpt: curriculum/outputs/toy_wm0.pt
+
+# frozen data splits
+data_root: data/mc_vpt_train
+data_root_train: data/mc_vpt_train
+data_root_holdout: data/mc_vpt_pt
+max_clips: 20
+holdout_max_clips: 8
+num_frame_per_block: 3
+block_stride: 1
+
+device: auto
+
+# sandbox (smoke uses stub via run_curriculum)
+use_sandbox: true
+sandbox_backend: stub
+latent_encoder: cheap
+pretrained_model_path: pretrained_wm
+minestudio_endpoint: https://model.example.com/sandboxGateway/system/714
+task_dir: /path/to/openha_tasks
+sandbox_max_turns: 6
+ticks_per_action: 4
+collect_every: 1
+max_sandbox_episodes: 40
+max_wm_updates: 40
+
+# frozen probe suite / gates
+probe_suite:
+  - action_causality
+  - counterfactual
+  - state_transfer
+  - long_horizon
+  - holdout_transfer
+probe_every: 1
+probe_n: 12
+probe_horizon: 3
+n_intervene: 3
+transfer_pairs: 16
+max_chains: 12
+train_chains: 6
+pass_thresh: 0.35
+fail_thresh: 0.35
+discover_topk: 8
+under_explore_bonus: 0.3
+causal_margin: 0.01
+probe_interventions: 12
+intervene_batch: 8
+max_interventions: 256
+
+transfer_split:
+  name: action_family
+  train_actions: [forward, back, left, right, noop]
+  holdout_actions: [turn_left, turn_right, look_up, look_down, forward_left, forward_right]
+
+# memory
+memory_merge_thresh: 0.85
+memory_max_items: 5000
+memory_min_confidence: 0.35
+
+# training (fixed; not the search object)
+expert_ratio: 0.7
+batch_size: 16
+wm_lr: 1.0e-4
+weight_decay: 0.01
+max_grad_norm: 1.0
+ema_tau: 0.99
+lambda_causal: 0.5
+lambda_intervene: 0.5
+lambda_horizon: 0.3
+lambda_memory: 0.2
+lambda_anchor: 0.1
+
+max_steps: 40
+log_interval: 2
+save_interval: 10
+eval_n: 32
+logdir: curriculum/outputs/auto_research_gaming_mvp
