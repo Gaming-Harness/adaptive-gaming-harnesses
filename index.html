@@ -269,14 +269,13 @@
         </div>
         <div class="content has-text-justified">
           <p>
-            Long-horizon gaming requires an agent to diagnose stalled execution, recover from failures, and reuse that experience on later tasks.
-            We introduce <strong>Test-Time Harness Evolution (KPHarness)</strong>, which keeps a gaming vision-language-action model frozen and evolves only the harness around it.
-            A fast loop executes actions. A slow research loop diagnoses failures, proposes harness changes, and checks them in paired sandbox rollouts.
-            Transferable recovery knowledge suggests what to try. Active probes test when that knowledge applies. Validated outcomes then update both future probes and the knowledge bank.
-            On 149 Minecraft tasks spanning mining, combat, and crafting, knowledge-guided evolution covers more tasks than the bare actor and a hand-written fixed harness. The full probing loop improves further over knowledge-only search.
+            Long-horizon gaming requires agents to diagnose stalled execution, recover from failures, and reuse experience across tasks. Existing execution harnesses typically rely on fixed intervention rules, limiting their ability to adapt to visually ambiguous failures. We introduce <strong>Knowledge–Probing Co-Evolution Harness (KPHarness)</strong>, a framework that improves the execution harness surrounding a frozen vision-language-action model through interaction. KPHarness separates fast action execution from a slow research loop that diagnoses failures, proposes harness modifications, and verifies them through isolated paired sandbox evaluations.
           </p>
           <p>
-            Can recovery knowledge guide what to probe, while probe outcomes reveal which knowledge applies?
+            Its central mechanism is knowledge–probing co-evolution, which turns outcome-driven harness search into evidence-guided evolution: transferable recovery knowledge provides intervention hypotheses, active probes test when they apply, and validated outcomes improve future knowledge and probe selection. We instantiate KPHarness with a gaming policy trained through supervised fine-tuning and reinforcement learning, and keep its parameters frozen throughout harness adaptation.
+          </p>
+          <p>
+            Experiments on 149 Minecraft tasks spanning mining, combat, and crafting show that knowledge-guided harness evolution substantially improves task coverage over both the bare actor and a manually specified fixed harness, while the complete framework further improves over knowledge-only evolution. Frozen evaluation on unseen tasks further shows that the evolved harness transfers beyond tasks encountered during adaptation. These results support external harness evolution as a means of converting grounded interaction feedback into transferable execution capability without further updating the underlying actor.
           </p>
         </div>
       </div>
