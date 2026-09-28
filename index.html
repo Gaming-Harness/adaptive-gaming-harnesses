@@ -270,7 +270,7 @@
         <div class="content has-text-justified">
           <p>
             Long-horizon gaming requires an agent to diagnose stalled execution, recover from failures, and reuse that experience on later tasks.
-            We introduce <strong>Test-Time Harness Evolution (TTHE)</strong>, which keeps a gaming vision-language-action model frozen and evolves only the harness around it.
+            We introduce <strong>Test-Time Harness Evolution (KPHarness)</strong>, which keeps a gaming vision-language-action model frozen and evolves only the harness around it.
             A fast loop executes actions. A slow research loop diagnoses failures, proposes harness changes, and checks them in paired sandbox rollouts.
             Transferable recovery knowledge suggests what to try. Active probes test when that knowledge applies. Validated outcomes then update both future probes and the knowledge bank.
             On 149 Minecraft tasks spanning mining, combat, and crafting, knowledge-guided evolution covers more tasks than the bare actor and a hand-written fixed harness. The full probing loop improves further over knowledge-only search.
@@ -302,12 +302,12 @@
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Method</h2>
     <p class="has-text-centered" style="color: #555; margin-bottom: 16px;">
-      The same frozen VLA is shared by Bare, Auto-K, and TTHE. Only the harness changes.
+      The same frozen VLA is shared by Bare, Auto-K, and KPHarness. Only the harness changes.
     </p>
     <div class="gray-box-container">
-      <img class="figure-frame figure-narrow" src="assets/figures/overview.jpg" alt="Bare and Auto-K fail a sand-mining task. TTHE detects the failure, probes, applies recovery knowledge, and completes it.">
+      <img class="figure-frame figure-narrow" src="assets/figures/overview.jpg" alt="Bare and Auto-K fail a sand-mining task. KPHarness detects the failure, probes, applies recovery knowledge, and completes it.">
       <p class="is-size-7 caption">
-        Sand mining with one frozen VLA. Bare executes the actor directly and fails. Auto-K proposes harness edits from a knowledge bank and still fails. TTHE adds probing evidence, accepts a verified edit, and completes the block.
+        Sand mining with one frozen VLA. Bare executes the actor directly and fails. Auto-K proposes harness edits from a knowledge bank and still fails. KPHarness adds probing evidence, accepts a verified edit, and completes the block.
       </p>
     </div>
 
@@ -387,7 +387,7 @@
             <td>N/A</td>
           </tr>
           <tr class="ours">
-            <td>TTHE</td>
+            <td>KPHarness</td>
             <td>70 / 149 (47.0%)</td>
             <td>29 / 50</td>
             <td>33 / 49</td>
@@ -402,12 +402,12 @@
       </table>
     </div>
     <p class="is-size-7 caption">
-      Rescued counts tasks that Bare fails and the method solves. Accept is a patch that beats the incumbent on the search seed. HO-win is an accepted patch that still improves on a disjoint holdout seed. Probe-only counts tasks that Knowledge Search misses and probing replay solves. At temperature 0, TTHE solves 44 / 149 and Auto-K solves 41 / 149. Auto-K and TTHE each accept 14 patches and record 5 HO-wins, but only four accepted cases and one HO-win overlap.
+      Rescued counts tasks that Bare fails and the method solves. Accept is a patch that beats the incumbent on the search seed. HO-win is an accepted patch that still improves on a disjoint holdout seed. Probe-only counts tasks that Knowledge Search misses and probing replay solves. At temperature 0, KPHarness solves 44 / 149 and Auto-K solves 41 / 149. Auto-K and KPHarness each accept 14 patches and record 5 HO-wins, but only four accepted cases and one HO-win overlap.
     </p>
 
     <h3 class="block-title">Cross-seed robustness</h3>
     <p class="has-text-centered" style="color: #555;">
-      The 110 tasks Bare fails, legacy protocol, temperature 0.7. Auto-K is frozen at test time. TTHE keeps the probing loop.
+      The 110 tasks Bare fails, legacy protocol, temperature 0.7. Auto-K is frozen at test time. KPHarness keeps the probing loop.
     </p>
     <div class="table-container">
       <table class="table is-bordered is-striped is-hoverable is-fullwidth results">
@@ -435,7 +435,7 @@
             <td>N/A</td>
           </tr>
           <tr class="ours">
-            <td>TTHE</td>
+            <td>KPHarness</td>
             <td>101</td>
             <td>31 / 110</td>
             <td>9 / 30</td>
@@ -455,7 +455,7 @@
             <td>N/A</td>
           </tr>
           <tr class="ours">
-            <td>TTHE</td>
+            <td>KPHarness</td>
             <td>202</td>
             <td>30 / 110</td>
             <td>9 / 30</td>
@@ -475,7 +475,7 @@
             <td>N/A</td>
           </tr>
           <tr class="ours">
-            <td>TTHE</td>
+            <td>KPHarness</td>
             <td>303</td>
             <td>25 / 110</td>
             <td>7 / 30</td>
@@ -495,7 +495,7 @@
             <td>N/A</td>
           </tr>
           <tr class="ours">
-            <td>TTHE</td>
+            <td>KPHarness</td>
             <td>Mean</td>
             <td>28.7 ± 3.2</td>
             <td>8.3 ± 1.2</td>
@@ -508,7 +508,7 @@
       </table>
     </div>
     <p class="is-size-7 caption">
-      TTHE rescues 7, 22, and 10 more tasks than Auto-K on the three seeds. On seeds 202 and 303 together, TTHE alone solves 36 tasks that Auto-K misses, against 4 in the other direction.
+      KPHarness rescues 7, 22, and 10 more tasks than Auto-K on the three seeds. On seeds 202 and 303 together, KPHarness alone solves 36 tasks that Auto-K misses, against 4 in the other direction.
     </p>
 
     <h3 class="block-title">Frozen transfer</h3>
@@ -542,7 +542,7 @@
             <td>0 / 20</td>
           </tr>
           <tr class="ours">
-            <td>TTHE</td>
+            <td>KPHarness</td>
             <td>15 / 60</td>
             <td>9 / 20</td>
             <td>5 / 20</td>
@@ -552,7 +552,7 @@
       </table>
     </div>
     <p class="is-size-7 caption">
-      Frozen transfer to 60 unseen tasks. All components are fixed during evaluation. TTHE solves 15 / 60, against 8 / 60 for Bare and 7 / 60 for a frozen Auto-K bank. The gain shows up in mining, combat, and crafting.
+      Frozen transfer to 60 unseen tasks. All components are fixed during evaluation. KPHarness solves 15 / 60, against 8 / 60 for Bare and 7 / 60 for a frozen Auto-K bank. The gain shows up in mining, combat, and crafting.
     </p>
 
     <h3 class="block-title">Where the extra successes come from</h3>
@@ -616,7 +616,7 @@
       <div class="video-grid-3" style="margin-bottom: 8px;">
         <div class="colhead fail">Bare · Failure</div>
         <div class="colhead fail">Auto-K · Failure</div>
-        <div class="colhead ok">TTHE · Success</div>
+        <div class="colhead ok">KPHarness · Success</div>
       </div>
 
       <h3 class="task-title">Mining · sand</h3>
@@ -634,7 +634,7 @@
           </video>
         </div>
         <div class="video-wrapper">
-          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <h4><span class="badge ok">Success</span>KPHarness</h4>
           <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/sand-probing-poster.jpg">
             <source src="assets/videos/sand-probing.mp4" type="video/mp4">
           </video>
@@ -656,7 +656,7 @@
           </video>
         </div>
         <div class="video-wrapper">
-          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <h4><span class="badge ok">Success</span>KPHarness</h4>
           <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/ghast-probing-poster.jpg">
             <source src="assets/videos/ghast-probing.mp4" type="video/mp4">
           </video>
@@ -678,7 +678,7 @@
           </video>
         </div>
         <div class="video-wrapper">
-          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <h4><span class="badge ok">Success</span>KPHarness</h4>
           <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/craft-autok-poster.jpg">
             <source src="assets/videos/craft-autok.mp4" type="video/mp4">
           </video>
@@ -686,7 +686,7 @@
       </div>
 
       <p class="is-size-7 caption">
-        Same order as the paper figure. On sand mining, Auto-K keeps the generic instruction “Gather sand from the desert” and does not finish within 100 turns. TTHE turns the probe evidence into “look down, center the crosshair on a sand block, and continuously attack,” and completes the block in 29 turns.
+        Same order as the paper figure. On sand mining, Auto-K keeps the generic instruction “Gather sand from the desert” and does not finish within 100 turns. KPHarness turns the probe evidence into “look down, center the crosshair on a sand block, and continuously attack,” and completes the block in 29 turns.
       </p>
     </div>
 
@@ -698,7 +698,7 @@
       <div class="video-grid-3" style="margin-bottom: 8px;">
         <div class="colhead fail">Bare · Failure</div>
         <div class="colhead fail">Auto-K · Failure</div>
-        <div class="colhead ok">TTHE · Success</div>
+        <div class="colhead ok">KPHarness · Success</div>
       </div>
 
       <h3 class="task-title">Combat · bee</h3>
@@ -716,7 +716,7 @@
           </video>
         </div>
         <div class="video-wrapper">
-          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <h4><span class="badge ok">Success</span>KPHarness</h4>
           <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/bee_seed101_probing-poster.jpg">
             <source src="assets/videos/cross_task/bee_seed101_probing.mp4" type="video/mp4">
           </video>
@@ -737,7 +737,7 @@
           </video>
         </div>
         <div class="video-wrapper">
-          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <h4><span class="badge ok">Success</span>KPHarness</h4>
           <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/bee_seed909_probing-poster.jpg">
             <source src="assets/videos/cross_task/bee_seed909_probing.mp4" type="video/mp4">
           </video>
@@ -759,7 +759,7 @@
           </video>
         </div>
         <div class="video-wrapper">
-          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <h4><span class="badge ok">Success</span>KPHarness</h4>
           <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/dark_oak_planks_seed202_probing-poster.jpg">
             <source src="assets/videos/cross_task/dark_oak_planks_seed202_probing.mp4" type="video/mp4">
           </video>
@@ -780,7 +780,7 @@
           </video>
         </div>
         <div class="video-wrapper">
-          <h4><span class="badge ok">Success</span>TTHE</h4>
+          <h4><span class="badge ok">Success</span>KPHarness</h4>
           <video class="clip" controls muted loop playsinline preload="metadata" poster="assets/videos/cross_task/dark_oak_planks_seed909_probing-poster.jpg">
             <source src="assets/videos/cross_task/dark_oak_planks_seed909_probing.mp4" type="video/mp4">
           </video>
@@ -959,7 +959,7 @@
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Limitations</h2>
     <p class="has-text-centered" style="color: #555; max-width: 760px; margin: 0 auto 16px;">
-      TTHE combines adaptive probing, sandbox verification, and transferable recovery knowledge around a frozen VLA. Minecraft experiments improve task coverage without further actor training, and frozen evaluation on unseen tasks shows that the evolved harness transfers beyond the tasks encountered during adaptation.
+      KPHarness combines adaptive probing, sandbox verification, and transferable recovery knowledge around a frozen VLA. Minecraft experiments improve task coverage without further actor training, and frozen evaluation on unseen tasks shows that the evolved harness transfers beyond the tasks encountered during adaptation.
     </p>
     <div class="content">
       <ol>
@@ -977,7 +977,7 @@
 <section class="section" id="citation">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Citation</h2>
-    <pre class="citation-box" id="bibtex">@misc{tthe2027knowledge,
+    <pre class="citation-box" id="bibtex">@misc{kpharness2027knowledge,
   title = {Knowledge--Probing Co-Evolution for Adaptive Gaming Harnesses},
   year  = {2027},
   note  = {Manuscript}
