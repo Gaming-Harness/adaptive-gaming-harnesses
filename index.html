@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Knowledge–Probing Co-Evolution for Adaptive Gaming Harnesses. Test-time harness evolution around a frozen gaming VLA.">
-  <title>Knowledge–Probing Co-Evolution for Adaptive Gaming Harnesses</title>
+  <meta name="description" content="Evolving Gaming Harnesses via Knowledge–Probing Co-Evolution. Test-time harness evolution around a frozen gaming VLA.">
+  <title>Evolving Gaming Harnesses via Knowledge–Probing Co-Evolution</title>
+  <link rel="canonical" href="https://chenzk202212.github.io/adaptive-gaming-harnesses/">
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -35,6 +36,12 @@
       flex-wrap: wrap;
     }
     .button-gap { margin: 5px; }
+    .publication-authors { max-width: 880px; margin: 20px auto 12px; line-height: 2; }
+    .publication-authors span { display: inline-block; margin-inline: 7px; }
+    .publication-authors a { color: #2f4c70; }
+    .publication-affiliations { font-size: 0.94rem; line-height: 1.9; }
+    .publication-affiliations span { display: inline-block; margin-inline: 9px; }
+    .publication-notes { margin-top: 10px; font-size: 0.82rem; line-height: 1.8; }
     .paper-dead {
       pointer-events: none !important;
       cursor: default !important;
@@ -231,11 +238,33 @@
         <div class="container is-max-desktop" style="margin-top: 28px;">
           <div class="has-text-centered">
             <h1 class="title is-2 publication-title">
-              <span class="title-color">Knowledge–Probing Co-Evolution</span> for Adaptive Gaming Harnesses
+              Evolving Gaming Harnesses via <span class="title-color">Knowledge–Probing Co-Evolution</span>
             </h1>
             <h2 class="subtitle subtitle-small">
               Test-time harness evolution around a frozen gaming VLA
             </h2>
+            <div class="publication-authors">
+              <span><a href="https://openreview.net/profile?id=~Zhikang_Chen1">Zhikang Chen</a><sup>1,*,†</sup></span>
+              <span><a href="https://openreview.net/profile?id=~Yueqing_Sun1">Yueqing Sun</a><sup>2</sup></span>
+              <span><a href="https://openreview.net/profile?id=~Yan_Feng4">Yan Feng</a><sup>2,†</sup></span>
+              <span><a href="https://openreview.net/profile?id=~Sen_Cui1">Sen Cui</a><sup>3</sup></span>
+              <span><a href="https://openreview.net/profile?id=~Xierui_SONG1">Xierui Song</a><sup>2,†</sup></span>
+              <span><a href="https://openreview.net/profile?id=~Ziang_Ye1">Ziang Ye</a><sup>2</sup></span>
+              <span><a href="https://openreview.net/profile?id=~Yu_Wang91">Yu Wang</a><sup>2</sup></span>
+              <span><a href="https://openreview.net/profile?id=~Yu_Zhang3">Yu Zhang</a><sup>4,†</sup></span>
+              <span><a href="https://openreview.net/profile?id=~Tingting_Zhu1">Tingting Zhu</a><sup>1</sup></span>
+            </div>
+            <div class="publication-affiliations">
+              <span><sup>1</sup> University of Oxford</span>
+              <span><sup>2</sup> Meituan</span>
+              <span><sup>3</sup> Tsinghua University</span>
+              <span><sup>4</sup> Southern University of Science and Technology</span>
+            </div>
+            <div class="publication-notes">
+              <span><sup>*</sup> Work done at Meituan.</span>&ensp;
+              <span><sup>†</sup> Corresponding authors.</span><br>
+              <a href="mailto:chenzk202212@126.com">chenzk202212@126.com</a>
+            </div>
             <div class="publication-links" style="margin-top: 18px;">
               <button type="button" class="button is-normal is-rounded is-dark button-gap paper-dead" disabled>
                 <span class="icon"><i class="fas fa-file-pdf"></i></span>
@@ -268,15 +297,9 @@
           <h2 class="title is-3">Abstract</h2>
         </div>
         <div class="content has-text-justified">
-          <p>
-            Long-horizon gaming requires agents to diagnose stalled execution, recover from failures, and reuse experience across tasks. Existing execution harnesses typically rely on fixed intervention rules, limiting their ability to adapt to visually ambiguous failures. We introduce <strong>Knowledge–Probing Co-Evolution Harness (KPHarness)</strong>, a framework that improves the execution harness surrounding a frozen vision-language-action model through interaction. KPHarness separates fast action execution from a slow research loop that diagnoses failures, proposes harness modifications, and verifies them through isolated paired sandbox evaluations.
-          </p>
-          <p>
-            Its central mechanism is knowledge–probing co-evolution, which turns outcome-driven harness search into evidence-guided evolution: transferable recovery knowledge provides intervention hypotheses, active probes test when they apply, and validated outcomes improve future knowledge and probe selection. We instantiate KPHarness with a gaming policy trained through supervised fine-tuning and reinforcement learning, and keep its parameters frozen throughout harness adaptation.
-          </p>
-          <p>
-            Experiments on 149 Minecraft tasks spanning mining, combat, and crafting show that knowledge-guided harness evolution substantially improves task coverage over both the bare actor and a manually specified fixed harness, while the complete framework further improves over knowledge-only evolution. Frozen evaluation on unseen tasks further shows that the evolved harness transfers beyond tasks encountered during adaptation. These results support external harness evolution as a means of converting grounded interaction feedback into transferable execution capability without further updating the underlying actor.
-          </p>
+          <p>Long-horizon gaming requires agents to diagnose stalled execution, recover from failures, and reuse experience across tasks. Existing execution harnesses typically rely on fixed intervention rules, limiting their ability to adapt to visually ambiguous failures. We introduce Knowledge–Probing Co-Evolution Harness (KPHarness), a framework that improves the execution harness surrounding a frozen vision-language-action model through interaction. KPHarness separates fast action execution from a slow research loop that diagnoses failures, proposes harness modifications, and verifies them through isolated paired sandbox evaluations.</p>
+          <p>Its central mechanism is knowledge–probing co-evolution, which turns outcome-driven harness search into evidence-guided evolution: transferable recovery knowledge provides intervention hypotheses, active probes test when they apply, and validated outcomes improve future knowledge and probe selection. We instantiate KPHarness with a gaming policy trained through supervised fine-tuning and reinforcement learning, and keep its parameters frozen throughout harness adaptation.</p>
+          <p>Experiments on 149 Minecraft tasks spanning mining, combat, and crafting show that knowledge-guided harness evolution substantially improves task coverage over both the bare actor and a manually specified fixed harness, while the complete framework further improves over knowledge-only evolution. Frozen evaluation on unseen tasks further shows that the evolved harness transfers beyond tasks encountered during adaptation. These results support external harness evolution as a means of converting grounded interaction feedback into transferable execution capability without further updating the underlying actor.</p>
         </div>
       </div>
     </section>
@@ -977,7 +1000,8 @@
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Citation</h2>
     <pre class="citation-box" id="bibtex">@misc{kpharness2027knowledge,
-  title = {Knowledge--Probing Co-Evolution for Adaptive Gaming Harnesses},
+  title = {Evolving Gaming Harnesses via Knowledge--Probing Co-Evolution},
+  author = {Chen, Zhikang and Sun, Yueqing and Feng, Yan and Cui, Sen and Song, Xierui and Ye, Ziang and Wang, Yu and Zhang, Yu and Zhu, Tingting},
   year  = {2027},
   note  = {Manuscript}
 }</pre>
@@ -989,7 +1013,7 @@
 
 <footer class="footer" style="padding: 1.5rem; background: #f7f7f7;">
   <div class="content has-text-centered">
-    <p>Knowledge–Probing Co-Evolution for Adaptive Gaming Harnesses</p>
+    <p>Evolving Gaming Harnesses via Knowledge–Probing Co-Evolution</p>
   </div>
 </footer>
 
